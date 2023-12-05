@@ -81,7 +81,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
   try {
     // Check if the provided AssignmentGroup belongs to the provided Course
     if (AssignmentGroup.course_id !== CourseInfo.id) {
-      throw new Error("This ag does not belong to the provided Course.");
+      throw new Error("This ag does't belong to the provided Course.");
     }
 
     //Map to store learner data using learner_id as the key
@@ -94,7 +94,7 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
       LearnerSubmissions.forEach(({ learner_id, assignment_id, submission }) => {
         // Find the assignment within the AssignmentGroup that matches the submission
         const assignment = AssignmentGroup.assignments.find(a => a.id === assignment_id);
-        if (!assignment) return; // If the assignment is not found, skip processing
+        if (!assignment) return; // If the assignment is not found, skip 
   
         // Get the due date of the assignment and check if it's past the current date
         const dueDate = new Date(assignment.due_at);
@@ -119,7 +119,6 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
         // Store the scores for each assignment for the learner
         learner.scores[assignment_id] = (submission.score - latePenalty) / assignment.points_possible;
       });
-  
       // Calculate weighted average and return formatted results
       const results = []; // Create an empty array to store the formatted results
       for (const [, learner] of learnerMap) { // Loop through each learner in the learnerMap
@@ -131,14 +130,13 @@ const getLearnerData = (CourseInfo, AssignmentGroup, LearnerSubmissions) => {
         };
         results.push(formattedResult); // Push the formatted result object into the results array
       }
-      
+
       return results; // Return the array containing all the formatted results
       } catch (error) {
         return error.message; // If there's an error, return the error message
       }
   }    
-  
-  // Usage example:
+  // Using the example data provided, let's log the result of the code
   const result = getLearnerData(CourseInfo, AssignmentGroup, LearnerSubmissions);
   console.log(result);
   
